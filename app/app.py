@@ -9,7 +9,7 @@ UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-@app.route('/<role>/upload', methods=['POST'])
+@app.route('/images/<role>/upload', methods=['POST'])
 def upload_image(role):
     
     try:
@@ -58,4 +58,4 @@ def get_image(role,user,image_filename):
     return send_file(image_path, as_attachment=False)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=9705, host='0.0.0.0')

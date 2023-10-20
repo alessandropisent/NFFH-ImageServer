@@ -1,0 +1,19 @@
+services:
+  imageServer:
+    container_name: imageServer
+    build:
+      dockerfile: ./app/Dockerfile
+    networks:
+      - gateway
+    volumes:
+      - uploadsImages:/app/uploads
+
+
+networks:
+  gateway:
+    external: true
+    name: g-images
+
+volumes:
+  uploadsImages:
+      
