@@ -1,6 +1,6 @@
 services:
-  imageServer:
-    container_name: imageServer
+  imageserver:
+    container_name: imageserver
     build:
       dockerfile: ./app/Dockerfile
     networks:
