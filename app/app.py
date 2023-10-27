@@ -12,15 +12,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/images/<role>/upload', methods=['POST'])
 def upload_image(role):
     
-    try:
         if role == "farmer":
                 
-            data = request.json  # Assuming JSON request with base64 data
+            data = request.get_json()  # Assuming JSON request with base64 data
             
             base64_image = data['base64_image']
-            user = data['user']
             
-            path_folder = UPLOAD_FOLDER + "/farmer/" + user
+            path_folder = UPLOAD_FOLDER + "/farmer/"
             
             if not os.path.exists(path_folder):
                 os.makedirs(path_folder)
@@ -29,7 +27,7 @@ def upload_image(role):
             image_data = base64.b64decode(base64_image)
             
             # Create a unique filename for the image
-            filename = f'image_{len(os.listdir(path_folder)) + 1}.png'
+            filename = f'image_{len(os.listdir(path_folder)) + 1}.jpeg'
             filepath = os.path.join(path_folder, filename)
             
             # Save the decoded image to the 'uploads' directory
@@ -37,19 +35,17 @@ def upload_image(role):
                 image_file.write(image_data)
             
             # Construct the URL for the uploaded image
-            image_url = f"images/{role}/{user}/{filename}"
+            image_url = f"images/{role}/{filename}"
         
-            return jsonify({'image_url': image_url})
+            return {'url': image_url}, 200
         
-        return jsonify({'image_url': "errore"})
+        return {'url': "errore"}
     
-    except Exception as e:
-        return jsonify({'error': str(e)})
 
-@app.route('/images/<role>/<user>/<image_filename>', methods=['GET'])
-def get_image(role,user,image_filename):
+@app.route('/images/<role>/<image_filename>', methods=['GET'])
+def get_image(role,image_filename):
     
-    path_folder = f"{UPLOAD_FOLDER}/{role}/{user}"
+    path_folder = f"{UPLOAD_FOLDER}/{role}"
     
     # Construct the path to the image
     image_path = os.path.join(path_folder, image_filename)
@@ -59,3 +55,5 @@ def get_image(role,user,image_filename):
 
 if __name__ == '__main__':
     app.run(debug=True, port=9705, host='0.0.0.0')
+
+
