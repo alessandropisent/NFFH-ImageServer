@@ -35,7 +35,7 @@ def upload_image(role):
                 image_file.write(image_data)
             
             # Construct the URL for the uploaded image
-            image_url = f"images/{role}/{filename}"
+            image_url = f"/images/{role}/{filename}"
         
             return {'url': image_url}, 200
         
