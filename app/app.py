@@ -16,7 +16,7 @@ def upload_image(role):
                 
             data = request.get_json()  # Assuming JSON request with base64 data
             
-            base64_image = data['base64_image']
+            base64_image = data['base64_image'].replace("data:image/jpeg;base64","")
             
             path_folder = UPLOAD_FOLDER + "/farmer/"
             
